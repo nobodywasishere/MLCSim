@@ -5,7 +5,7 @@ from statistics import stdev
 
 from min import findAllConfigs, calcCellDeltaList
 
-from final2 import get_error_map
+from simulation import get_error_map
 
 def main():
 

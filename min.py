@@ -94,7 +94,7 @@ def main():
                         choices=range(1, 5), help='bits per cell')
     parser.add_argument('-c', type=int, default=2,
                         choices=range(1, 10), help='num of cells')
-    parser.add_argument('-o', type=str, help='output ')
+    parser.add_argument('-o', type=str, help='output to file')
 
     args = parser.parse_args()
 
