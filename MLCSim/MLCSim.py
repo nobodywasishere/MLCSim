@@ -41,21 +41,19 @@ class MLCSim():
         return out
 
 
-def main():
+def main(argv):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-b', type=int, default=2, choices=range(1,5), help='bits per cell')
-    parser.add_argument('-c', type=int, default=2, choices=range(1,5), help='num of cells')
     parser.add_argument('-f', required=True, help="cell config json")
     parser.add_argument('action', choices=['enc', 'dec'], help="action to take on value")
     parser.add_argument('val', help='val to {en,de}code')
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     with open(args.f, 'r') as infile:
         config = json.load(infile)
 
-    mlc = MLCSim(args.b, args.c, config)
+    mlc = MLCSim(config)
 
     if args.action == 'enc':
         print(mlc.enc(int(args.val)))
@@ -64,4 +62,4 @@ def main():
         print(mlc.dec(cells))
 
 if __name__=="__main__":
-    main()
+    main(sys.argv[1:])
