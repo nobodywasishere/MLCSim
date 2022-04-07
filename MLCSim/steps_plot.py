@@ -11,24 +11,44 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 
 from min import findAllConfigs, calcCellDeltaList
-from simulation import get_configs
+# from simulation import get_configs
+from dist import genErrorMap
+from steps import sortConfigs
 
 
 def main():
 
-    b = 3
-    c = 4
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-b', type=int, default=2,
+                        choices=[2, 3, 4], help='bits per cell')
+    parser.add_argument('-c', type=int, default=2,
+                        choices=[2, 3, 4, 5, 6, 7, 8], help='num of cells')
+    parser.add_argument('--thr', required=True, help='Threshold map JSON')
+
+    args = parser.parse_args()
+
+    b = args.b
+    c = args.c
 
     # configs = findAllConfigs(b, c)
-    configs = get_configs(b, c)
+    # configs = get_configs(b, c)
+    with open(args.thr) as f:
+        thr_map = json.load(f)
+    error_map = genErrorMap(thr_map, b)
+    all_configs = sortConfigs(b, c, error_map)
+
+    configs = all_configs[:2] + [all_configs[int(len(all_configs)/2)]] + all_configs[-2:]
 
     steps = []
     maxval = 0
     for config in configs:
         config_steps = []
-        for cell in config:
+        for cell in config[1]:
             config_steps.append(calcCellDeltaList(cell, b))
-        steps.append(config_steps)
+        n = (config_steps, config[1], config[0], config[2])
+        if n not in steps:
+            steps.append(n)
 
     print(steps)
 
@@ -39,15 +59,13 @@ def main():
     plt.xlabel('Set cell level')
     plt.ylabel('Cell value')
 
-    labels = ['Shell', 'Stripe', 'Standard', 'Other']
-
     for i in range(len(steps)):
 
-        for j in range(len(steps[i])):
+        for j in range(len(steps[i][0])):
             x_axis = np.array([2**i for i in range(len(steps[i][0])+1)])
-            axs[i].plot([sum(steps[i][j][:k]) for k in range(len(steps[i][j]) + 1)])
+            axs[i].plot([sum(steps[i][0][j][:k]) for k in range(len(steps[i][0][j]) + 1)])
 
-        axs[i].title.set_text(f'{labels[i]} encoding')
+        axs[i].title.set_text(f'{steps[i][1]} encoding, {steps[i][2]:0.5f} stdev, {steps[i][3]:0.5f} sum*err')
         axs[i].set_ylim([0, 2**(b*c)])
         axs[i].set_yscale('symlog', base=2)
         
