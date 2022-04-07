@@ -21,13 +21,7 @@ def __main():
     parser.add_argument(
         "-c", type=int, default=2, choices=[2, 3, 4, 5, 6, 7, 8], help="num of cells"
     )
-    parser.add_argument("-f", help="config JSON")
-    parser.add_argument(
-        "--arr-size", type=int, default=2**8, help="size of the array to test"
-    )
-    parser.add_argument(
-        "--iter-size", type=int, default=2**8, help="number of arrays to test"
-    )
+    parser.add_argument("-f", required=True, help="Cell configuration JSON")
     parser.add_argument("--thr", required=True, help="Threshold map JSON")
 
     args = parser.parse_args()

@@ -59,7 +59,7 @@ def injectFaults(mat: list, error_map: dict, b: int) -> int:
 
 def calcErrMagnitude(
     configs: dict, in_mat: list, out_mat: list, errs: list, errs_perc: list
-) -> list:
+):
     """Calculates the magnitude of errors difference between two matrices
 
     Args:
@@ -68,9 +68,6 @@ def calcErrMagnitude(
         out_mat (list): Dirty/error matrix
         errs (list): Magnitude of error appended to at index corresponding to the index of the config
         errs_perc (list): Percent magnitude of error appended to at index corresponding to the index of the config
-
-    Returns:
-        list: _description_
     """
     for config_idx, config in enumerate(configs):
         mlc = MLCSim(config)

@@ -7,8 +7,8 @@ import json
 import copy
 from pprint import pprint
 
-# import matplotlib.pyplot as plt
-# from matplotlib.ticker import PercentFormatter
+import matplotlib.pyplot as plt
+from matplotlib.ticker import PercentFormatter
 
 try:
     from .MLCSim import MLCSim
@@ -39,7 +39,7 @@ def __main():
     parser.add_argument(
         "--iter-size", type=int, default=2**8, help="number of arrays to test"
     )
-    parser.add_argument("--thr", required=True, help="Threshold map to test")
+    parser.add_argument("--thr", help="Threshold map to test")
     parser.add_argument("--plot", action="store_true", default=False)
 
     args = parser.parse_args()
@@ -62,8 +62,12 @@ def __main():
         all_configs = sortConfigs(args.b, args.c, error_map)
         if len(all_configs) > 5:
             configs = [
-                all_configs[0][1], all_configs[1][1], all_configs[2][1], 
-                all_configs[-1][1], all_configs[-2][1], all_configs[-3][1]
+                all_configs[0][1],
+                all_configs[1][1],
+                all_configs[2][1],
+                all_configs[-1][1],
+                all_configs[-2][1],
+                all_configs[-3][1],
             ]
         else:
             configs = [all_configs[i][1] for i in range(len(all_configs))]
@@ -76,7 +80,7 @@ def __main():
 
     # Generate random values, inject errors into them,
     # and find the magnitude of the errors for all the configs
-    print('Running simulations...')
+    print("Running simulations...")
     random.seed(0)
     for i in range(args.iter_size):
 
