@@ -10,12 +10,12 @@ import copy
 import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 
-from MLCSim.min import findAllConfigs, calcCellDeltaList
-from MLCSim.dist import genErrorMap
-from MLCSim.steps import sortConfigs
+from .min import findAllConfigs, calcCellDeltaList
+from .dist import genErrorMap
+from .steps import sortConfigs
 
 
-def main():
+def __main():
 
     parser = argparse.ArgumentParser()
 
@@ -81,4 +81,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()

@@ -10,20 +10,10 @@ import copy
 import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 
-from MLCSim.MLCSim import MLCSim
-
-# https://stackoverflow.com/a/8391735/9047818
-# Disable
-def blockPrint():
-    sys.stdout = open(os.devnull, "w")
+from .MLCSim import MLCSim
 
 
-# Restore
-def enablePrint():
-    sys.stdout = sys.__stdout__
-
-
-def get_configs(b, c):
+def __get_configs(b, c):
     configs = []
     if b == 2:
         if c == 2:
@@ -211,7 +201,7 @@ def get_configs(b, c):
     return configs
 
 
-def get_error_map(b, kind):
+def __get_error_map(b, kind):
     error_map = []
     if b == 2:
         if kind == "uniform":
@@ -326,7 +316,7 @@ def injectFaults(mat: list, error_map: dict, b: int) -> int:
     return err_count
 
 
-def main():
+def __main():
 
     parser = argparse.ArgumentParser()
 
@@ -355,7 +345,7 @@ def main():
         with open(args.f, "r") as f:
             config = json.load(f)
     else:
-        configs = get_configs(args.b, args.c)
+        configs = __get_configs(args.b, args.c)
 
     if configs == []:
         raise ValueError("No config loaded!")
@@ -367,7 +357,7 @@ def main():
     b = len(configs[0][0])
     c = len(configs[0])
 
-    error_map = get_error_map(b, args.err_kind)
+    error_map = __get_error_map(b, args.err_kind)
 
     total_count = 0
 
@@ -435,4 +425,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()

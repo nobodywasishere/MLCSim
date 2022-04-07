@@ -82,8 +82,7 @@ def genErrorMap(thr_maps: dict, bpc: int) -> list:
     return err_map
 
 
-def main():
-
+def __main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -107,4 +106,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()

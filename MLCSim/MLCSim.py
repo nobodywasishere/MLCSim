@@ -78,7 +78,7 @@ class MLCSim:
         return out
 
 
-def main():
+def __main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-f", required=True, help="cell config json")
@@ -102,4 +102,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()

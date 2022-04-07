@@ -45,7 +45,7 @@ def generateThresh(b: int, e: float, dist: str) -> list:
         raise ValueError(f"Unknown threshold distribution: {dist}")
 
 
-def main():
+def __main():
 
     parser = argparse.ArgumentParser()
 
@@ -99,7 +99,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()
 
 
 """

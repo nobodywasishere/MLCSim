@@ -4,8 +4,8 @@ import argparse
 from statistics import stdev
 import json
 
-from MLCSim.min import findAllConfigs, calcCellDeltaList
-from MLCSim.dist import genErrorMap
+from .min import findAllConfigs, calcCellDeltaList
+from .dist import genErrorMap
 
 
 def sortConfigs(b: int, c: int, error_map: dict) -> list:
@@ -40,7 +40,7 @@ def sortConfigs(b: int, c: int, error_map: dict) -> list:
     return sums
 
 
-def main():
+def __main():
 
     parser = argparse.ArgumentParser()
 
@@ -81,4 +81,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()

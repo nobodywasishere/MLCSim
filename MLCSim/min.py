@@ -9,7 +9,7 @@ import json
 from math import factorial
 
 # https://stackoverflow.com/a/42304815/9047818
-def part(agents, items):
+def __part(agents, items):
     if len(agents) == 1:
         yield {agents[0]: items}
     else:
@@ -20,7 +20,7 @@ def part(agents, items):
                 continue
             remainder = items[:]
             selection = [remainder.pop(i) for i in reversed(indexes)][::-1]
-            for result in part(agents[1:], remainder):
+            for result in __part(agents[1:], remainder):
                 result[agents[0]] = selection
                 yield result
 
@@ -52,7 +52,7 @@ def findAllConfigs(bits_per_cell: int, num_cells: int) -> list:
 
     c = 0
     configs = []
-    for i in part(list(range(num_cells)), list(range(bits_per_cell * num_cells))):
+    for i in __part(list(range(num_cells)), list(range(bits_per_cell * num_cells))):
         configs.append([j for j in i.values()])
 
     return configs
@@ -98,8 +98,7 @@ def calcCellDeltaList(cell: list, bpc: int) -> list:
     return out
 
 
-def main():
-
+def __main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -150,4 +149,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    __main()
