@@ -25,19 +25,19 @@ def normalChance(mean, stdev, thr):
     return float(chance if mean > thr else 1 - chance)
 
 # Generate an error map from a threshold map
-def genErrorMap(thr_maps, bpc, lv=1):
-    if bpc not in thr_maps.keys():
+def genErrorMap(thr_maps, bpc):
+    if str(bpc) not in thr_maps.keys():
         raise ValueError(f'Threshold map does not have values for {bpc} levels')
-    thr_map = thr_maps[bpc]
+    thr_map = thr_maps[str(bpc)]
     err_map = [[0.0]]
 
-    for i in range(len(thr_map) - lv):
+    for i in range(len(thr_map) - 1):
         mid = normalMidpoint(
-            thr_map[i][0], thr_map[i+lv][0],
-            thr_map[i][1], thr_map[i+lv][1]
+            thr_map[i][0], thr_map[i+1][0],
+            thr_map[i][1], thr_map[i+1][1]
         )
         up = normalChance(thr_map[i][0], thr_map[i][1], mid)
-        dn = normalChance(thr_map[i+lv][0], thr_map[i+lv][1], mid)
+        dn = normalChance(thr_map[i+1][0], thr_map[i+1][1], mid)
 
         err_map[i].append(up)
         err_map.append([dn])
@@ -70,15 +70,13 @@ def main():
     parser.add_argument('-f', required=True,
                         help='Threshold map json to convert')
     parser.add_argument('-o', type=str, help='output to file')
-    parser.add_argument('--lvls', type=int, default=1, 
-        help='check likelihood of different than 1-level errors')
 
     args = parser.parse_args()
 
     with open(args.f) as f:
         thr_map = json.load(f)
 
-    err_map = genErrorMap(thr_map, str(args.b), lv=args.lvls)
+    err_map = genErrorMap(thr_map, args.b)
 
     if args.o:
         with open(args.o, 'w') as f:
