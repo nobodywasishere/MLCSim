@@ -7,6 +7,8 @@ docs:
 		--overview-file="REAMDE.md" \
 		MLCSim
 	mkdocs build
+
+serve:
 	python -m http.server --directory site
 
 format:
