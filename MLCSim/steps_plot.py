@@ -10,21 +10,22 @@ import copy
 import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 
-from min import findAllConfigs, calcCellDeltaList
-# from simulation import get_configs
-from dist import genErrorMap
-from steps import sortConfigs
+from MLCSim.min import findAllConfigs, calcCellDeltaList
+from MLCSim.dist import genErrorMap
+from MLCSim.steps import sortConfigs
 
 
 def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-b', type=int, default=2,
-                        choices=[2, 3, 4], help='bits per cell')
-    parser.add_argument('-c', type=int, default=2,
-                        choices=[2, 3, 4, 5, 6, 7, 8], help='num of cells')
-    parser.add_argument('--thr', required=True, help='Threshold map JSON')
+    parser.add_argument(
+        "-b", type=int, default=2, choices=[2, 3, 4], help="bits per cell"
+    )
+    parser.add_argument(
+        "-c", type=int, default=2, choices=[2, 3, 4, 5, 6, 7, 8], help="num of cells"
+    )
+    parser.add_argument("--thr", required=True, help="Threshold map JSON")
 
     args = parser.parse_args()
 
@@ -38,7 +39,9 @@ def main():
     error_map = genErrorMap(thr_map, b)
     all_configs = sortConfigs(b, c, error_map)
 
-    configs = all_configs[:2] + [all_configs[int(len(all_configs)/2)]] + all_configs[-2:]
+    configs = (
+        all_configs[:2] + [all_configs[int(len(all_configs) / 2)]] + all_configs[-2:]
+    )
 
     steps = []
     maxval = 0
@@ -56,21 +59,26 @@ def main():
     # plt.legend([f'Cell {j}' for j in reversed(range(len(steps[0])))])
     # plt.yticks(range(0, 2**(b*c), 2))
     plt.xticks(range(0, 2**b))
-    plt.xlabel('Set cell level')
-    plt.ylabel('Cell value')
+    plt.xlabel("Set cell level")
+    plt.ylabel("Cell value")
 
     for i in range(len(steps)):
 
         for j in range(len(steps[i][0])):
-            x_axis = np.array([2**i for i in range(len(steps[i][0])+1)])
-            axs[i].plot([sum(steps[i][0][j][:k]) for k in range(len(steps[i][0][j]) + 1)])
+            x_axis = np.array([2**i for i in range(len(steps[i][0]) + 1)])
+            axs[i].plot(
+                [sum(steps[i][0][j][:k]) for k in range(len(steps[i][0][j]) + 1)]
+            )
 
-        axs[i].title.set_text(f'{steps[i][1]} encoding, {steps[i][2]:0.5f} stdev, {steps[i][3]:0.5f} sum*err')
-        axs[i].set_ylim([0, 2**(b*c)])
-        axs[i].set_yscale('symlog', base=2)
-        
+        axs[i].title.set_text(
+            f"{steps[i][1]} encoding, {steps[i][2]:0.5f} stdev, {steps[i][3]:0.5f} sum*err"
+        )
+        axs[i].set_ylim([0, 2 ** (b * c)])
+        axs[i].set_yscale("symlog", base=2)
+
     # fig.tight_layout()
     plt.show()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     main()
