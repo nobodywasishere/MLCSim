@@ -1,0 +1,16 @@
+site_name: MLCSim
+site_url: https://blog.eowyn.net/MLCSim
+site_author: Margret Riegert
+
+# Repository
+repo_name: MLCSim
+repo_url: https://github.com/nobodywasishere/MLCSim
+edit_uri: edit/master/docs
+docs_dir: docs
+
+plugins:
+  - awesome-pages
+  - search
+
+theme:
+  name: readthedocs
