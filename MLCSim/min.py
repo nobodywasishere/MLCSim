@@ -4,7 +4,7 @@ import os, sys
 import argparse
 from itertools import permutations, combinations
 from statistics import stdev, mean
-from rich import print as pprint
+from pprint import pprint
 import json
 from math import factorial
 
