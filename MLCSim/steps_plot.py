@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 
-import os, sys
-import random
 import numpy as np
 import argparse
 import json
-import copy
 
 import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter
 
-from .min import findAllConfigs, calcCellDeltaList
-from .dist import genErrorMap
-from .steps import sortConfigs
+try:
+    from .configs import calcCellDeltaList, sortConfigs
+    from .dist import genErrorMap
+except ImportError:
+    from configs import calcCellDeltaList, sortConfigs
+    from dist import genErrorMap
 
 
 def __main():

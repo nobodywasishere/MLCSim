@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys
 import argparse
-from itertools import permutations, combinations
-from statistics import stdev, mean
+from itertools import combinations
+from statistics import stdev
 from pprint import pprint
 import json
 from math import factorial
@@ -56,6 +55,38 @@ def findAllConfigs(bits_per_cell: int, num_cells: int) -> list:
         configs.append([j for j in i.values()])
 
     return configs
+
+
+def sortConfigs(b: int, c: int, error_map: dict) -> list:
+    """Generates all cell configs and sorts them by their delta and error sum
+
+    Args:
+        b (int): Bits per cell
+        c (int): Number of cells
+        error_map (dict): Error map dictionary
+
+    Returns:
+        list: All configs sorted by delta and error sum
+    """
+    sums = []
+
+    for config in findAllConfigs(b, c):
+        config_steps = [calcCellDeltaList(cell, b) for cell in config]
+
+        err_sum = 0
+        errs = []
+        for cell in config_steps:
+            l = []
+            for i in range(2**b - 1):
+                l.append((error_map[i][1] + error_map[i + 1][0]) * cell[i])
+            err_sum += sum(l)
+            errs.append(sum(l))
+
+        sums.append((stdev(errs), config, err_sum))
+        # print()
+
+    sums.sort()
+    return sums
 
 
 def calcCellDelta(cell: list, bpc: int) -> int:

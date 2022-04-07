@@ -1,43 +1,14 @@
 #!/usr/bin/env python
 
 import argparse
-from statistics import stdev
 import json
 
-from .min import findAllConfigs, calcCellDeltaList
-from .dist import genErrorMap
-
-
-def sortConfigs(b: int, c: int, error_map: dict) -> list:
-    """Generates all cell configs and sorts them by their delta and error sum
-
-    Args:
-        b (int): Bits per cell
-        c (int): Number of cells
-        error_map (dict): Error map dictionary
-
-    Returns:
-        list: All configs sorted by delta and error sum
-    """
-    sums = []
-
-    for config in findAllConfigs(b, c):
-        config_steps = [calcCellDeltaList(cell, b) for cell in config]
-
-        err_sum = 0
-        errs = []
-        for cell in config_steps:
-            l = []
-            for i in range(2**b - 1):
-                l.append((error_map[i][1] + error_map[i + 1][0]) * cell[i])
-            err_sum += sum(l)
-            errs.append(sum(l))
-
-        sums.append((stdev(errs), config, err_sum))
-        # print()
-
-    sums.sort()
-    return sums
+try:
+    from .configs import sortConfigs
+    from .dist import genErrorMap
+except ImportError:
+    from configs import sortConfigs
+    from dist import genErrorMap
 
 
 def __main():
@@ -58,13 +29,11 @@ def __main():
         "--iter-size", type=int, default=2**8, help="number of arrays to test"
     )
     parser.add_argument("--thr", required=True, help="Threshold map JSON")
-    parser.add_argument("--plot", action="store_true", default=False)
 
     args = parser.parse_args()
 
     b = args.b
     c = args.c
-    L = b * c
 
     with open(args.thr) as f:
         thr_map = json.load(f)
