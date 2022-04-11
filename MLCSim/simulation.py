@@ -1,5 +1,31 @@
 #!/usr/bin/env python
 
+"""MLC encoding/threshold simulation script
+
+When called directly as main, it will execute a simulation testing
+different cell configurations chosen automatically or passed through,
+checking each of their error mean and stdev to single-level errors.
+
+```
+$ python -m MLCSim.simulation --help
+
+usage: simulation.py [-h] [-b {2,3,4}] [-c {2,3,4,5,6,7,8}] [-f F] [--arr-size ARR_SIZE]
+                     [--iter-size ITER_SIZE] [--thr THR] [--plot]
+
+options:
+  -h, --help            show this help message and exit
+  -b {2,3,4}            bits per cell
+  -c {2,3,4,5,6,7,8}    num of cells
+  -f F                  config JSON
+  --arr-size ARR_SIZE   size of the array to test
+  --iter-size ITER_SIZE
+                        number of arrays to test
+  --thr THR             Threshold map to test
+  --plot
+```
+"""
+
+
 import random
 import numpy as np
 import argparse
@@ -22,7 +48,7 @@ except ImportError:
     from dist import genErrorMap
 
 
-def __main():
+def _main():
 
     parser = argparse.ArgumentParser()
 
@@ -130,4 +156,4 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()

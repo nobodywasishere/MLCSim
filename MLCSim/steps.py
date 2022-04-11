@@ -1,5 +1,24 @@
 #!/usr/bin/env python
 
+"""Script for finding configurations
+
+When called directly as main, it will provide the 'scores' of
+all the possible configurations.
+
+```
+$ python -m MLCSim.steps --help
+
+usage: steps.py [-h] [-b {2,3,4}] [-c {2,3,4,5,6,7,8}] -f F --thr THR
+
+options:
+  -h, --help          show this help message and exit
+  -b {2,3,4}          bits per cell
+  -c {2,3,4,5,6,7,8}  num of cells
+  -f F                Cell configuration JSON
+  --thr THR           Threshold map JSO
+```
+"""
+
 import argparse
 import json
 
@@ -11,7 +30,7 @@ except ImportError:
     from dist import genErrorMap
 
 
-def __main():
+def _main():
 
     parser = argparse.ArgumentParser()
 
@@ -44,4 +63,4 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()

@@ -1,5 +1,45 @@
 #!/usr/bin/env python
 
+"""Threshold functions
+
+This module provides functions for creating threshold maps.
+
+When called directly as main, it allows for creating a threshold
+map based on the number of bits per cell, the std dev of each 
+threshold level, and the threshold distribution.
+
+```
+$ python -m MLCSim.thresh --help
+
+usage: thresh.py [-h] [-d D] [-e E] [-f F] [--plot] [--scale-e]
+
+options:
+  -h, --help  show this help message and exit
+  -d D        Threshold distribution
+  -e E        Threshold stdev for 2 bits per cell
+  -f F        Threshold map json to output
+  --plot
+  --scale-e   Scale -e with MLC size to preserve overlap
+```
+
+Currently supported threshold distributions are `uniform`, and
+`split-n` where increasing `n` increases the amount of separation in
+the center. 
+
+
+`uniform` threshold distribution:
+
+![`uniform` threshold distribution](../thr-uniform.png)
+
+`split-1` threshold distribution:
+
+![`split-1` threshold distribution](../thr-split-1.png)
+
+`split-2` threshold distribution:
+
+![`split-2` threshold distribution](../thr-split-2.png)
+"""
+
 import argparse
 from pprint import pprint
 import json
@@ -45,7 +85,7 @@ def generateThresh(b: int, e: float, dist: str) -> list:
         raise ValueError(f"Unknown threshold distribution: {dist}")
 
 
-def __main():
+def _main():
 
     parser = argparse.ArgumentParser()
 
@@ -99,7 +139,7 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()
 
 
 """

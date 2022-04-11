@@ -1,5 +1,26 @@
 #!/usr/bin/env python
 
+"""Distribution functions
+
+This module provides functions for dealing with normal distributions
+and generating error maps.
+
+When called directly as main, it allows for converting a threshold map
+into an error map.
+
+```
+$ python -m MLCSim.dist --help
+
+usage: dist.py [-h] [-b {1,2,3,4}] -f F [-o O]
+
+options:
+  -h, --help    show this help message and exit
+  -b {1,2,3,4}  bits per cell
+  -f F          Threshold map json to convert
+  -o O          output to file
+```
+"""
+
 import argparse
 import json
 from pprint import pprint
@@ -82,7 +103,7 @@ def genErrorMap(thr_maps: dict, bpc: int) -> list:
     return err_map
 
 
-def __main():
+def _main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -106,4 +127,4 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()

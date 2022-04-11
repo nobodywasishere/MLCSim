@@ -5,6 +5,8 @@ docs:
 	lazydocs \
 		--output-path="./docs/docstrings" \
 		--overview-file="REAMDE.md" \
+		--ignored-modules simulation,steps,steps_plot \
+		--src-base-url "https://github.com/nobodywasishere/MLCSim/blob/master/" \
 		MLCSim
 	mkdocs build
 
@@ -13,5 +15,11 @@ serve:
 
 format:
 	black MLCSim/*.py
+	docstr-coverage \
+		--skip-init \
+		--skip-private \
+		--skip-class-def \
+		-b docs/badge.svg \
+		MLCSim/
 
 .PHONY: install docs format

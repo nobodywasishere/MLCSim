@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""Matrix functions
+
+This module provides functions for creating and handling matrix applications.
+"""
+
 import random
 
 try:

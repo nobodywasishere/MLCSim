@@ -1,5 +1,28 @@
 #!/usr/bin/env python
 
+"""MLCSim class
+
+This module provides the `MLCSim` class, which is used for encoding
+and decoding values to and from its MLC configuration.
+
+When called directly as main, it allows for encoding and decoding a value
+using a cell configuration json.
+
+```
+$ python -m MLCSim.MLCSim --help
+
+usage: MLCSim.py [-h] -f F {enc,dec} val
+
+positional arguments:
+  {enc,dec}   action to take on value
+  val         val to {en,de}code
+
+options:
+  -h, --help  show this help message and exit
+  -f F        cell config json
+```
+"""
+
 import os, sys
 import argparse
 import json
@@ -78,7 +101,7 @@ class MLCSim:
         return out
 
 
-def __main():
+def _main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("-f", required=True, help="cell config json")
@@ -102,4 +125,4 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()

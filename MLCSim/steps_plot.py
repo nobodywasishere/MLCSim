@@ -1,5 +1,19 @@
 #!/usr/bin/env python
 
+"""Script for plotting different cell configurations
+
+When called directly as main, it will create a pyplot showing the
+steps sizes between each threshold level in an encoded MLC value.
+
+3 cells, 3 bits per cell, `split-1` threshold distribution
+
+![](../steps-split-1-3_3.png)
+
+3 cells, 3 bits per cell, `uniform` threshold distribution
+
+![](../steps-uniform-3_3.png)
+"""
+
 import numpy as np
 import argparse
 import json
@@ -14,7 +28,7 @@ except ImportError:
     from dist import genErrorMap
 
 
-def __main():
+def _main():
 
     parser = argparse.ArgumentParser()
 
@@ -80,4 +94,4 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()

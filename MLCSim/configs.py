@@ -1,5 +1,27 @@
 #!/usr/bin/env python
 
+"""Cell configuration functions
+
+This module provides functions for finding/handling cell
+configurations.
+
+When called directly as main, it outputs a list of the best
+and wost configs.
+
+```
+$ python -m MLCSim.configs --help
+
+usage: configs.py [-h] [-b {1,2,3,4}] [-c {1,2,3,4,5,6,7,8,9}] [-o O]
+
+options:
+  -h, --help            show this help message and exit
+  -b {1,2,3,4}          bits per cell
+  -c {1,2,3,4,5,6,7,8,9}
+                        num of cells
+  -o O                  output to file
+```
+"""
+
 import argparse
 from itertools import combinations
 from statistics import stdev
@@ -8,7 +30,7 @@ import json
 from math import factorial
 
 # https://stackoverflow.com/a/42304815/9047818
-def __part(agents, items):
+def _part(agents, items):
     if len(agents) == 1:
         yield {agents[0]: items}
     else:
@@ -19,7 +41,7 @@ def __part(agents, items):
                 continue
             remainder = items[:]
             selection = [remainder.pop(i) for i in reversed(indexes)][::-1]
-            for result in __part(agents[1:], remainder):
+            for result in _part(agents[1:], remainder):
                 result[agents[0]] = selection
                 yield result
 
@@ -51,7 +73,7 @@ def findAllConfigs(bits_per_cell: int, num_cells: int) -> list:
 
     c = 0
     configs = []
-    for i in __part(list(range(num_cells)), list(range(bits_per_cell * num_cells))):
+    for i in _part(list(range(num_cells)), list(range(bits_per_cell * num_cells))):
         configs.append([j for j in i.values()])
 
     return configs
@@ -129,7 +151,7 @@ def calcCellDeltaList(cell: list, bpc: int) -> list:
     return out
 
 
-def __main():
+def _main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -180,4 +202,4 @@ def __main():
 
 
 if __name__ == "__main__":
-    __main()
+    _main()
