@@ -21,5 +21,9 @@ format:
 		--skip-class-def \
 		-b docs/badge.svg \
 		MLCSim/
+	mypy MLCSim
 
-.PHONY: install docs format
+clean:
+	rm -rf docs/docstrings build site __pycache__ MLCSim/__pycache__ .mypy_cache
+
+.PHONY: install docs format clean

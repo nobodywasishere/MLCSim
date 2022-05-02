@@ -28,9 +28,12 @@ from statistics import stdev
 from pprint import pprint
 import json
 from math import factorial
+from typing import Dict, Generator, List, Tuple, Union
 
 # https://stackoverflow.com/a/42304815/9047818
-def _part(agents, items):
+def _part(
+    agents: List[int], items: List[int]
+) -> Generator[Dict[int, List[int]], None, None]:
     if len(agents) == 1:
         yield {agents[0]: items}
     else:
@@ -46,7 +49,7 @@ def _part(agents, items):
                 yield result
 
 
-def findAllConfigs(bits_per_cell: int, num_cells: int) -> list:
+def findAllConfigs(bits_per_cell: int, num_cells: int) -> List[List[List[int]]]:
     """Calculates all possible cell configurations
 
     Args:
@@ -68,18 +71,16 @@ def findAllConfigs(bits_per_cell: int, num_cells: int) -> list:
         ).lower() in ["", "y", "yes"]:
             exit(1)
 
-    configs = []
-    dups = 0
-
-    c = 0
-    configs = []
+    configs: List[List[List[int]]] = []
     for i in _part(list(range(num_cells)), list(range(bits_per_cell * num_cells))):
         configs.append([j for j in i.values()])
 
     return configs
 
 
-def sortConfigs(b: int, c: int, error_map: dict) -> list:
+def sortConfigs(
+    b: int, c: int, error_map: List[List[float]]
+) -> List[Tuple[float, List[List[int]], float]]:
     """Generates all cell configs and sorts them by their delta and error sum
 
     Args:
@@ -90,19 +91,20 @@ def sortConfigs(b: int, c: int, error_map: dict) -> list:
     Returns:
         list: All configs sorted by delta and error sum
     """
-    sums = []
+    sums: List[Tuple[float, List[List[int]], float]] = []
 
     for config in findAllConfigs(b, c):
-        config_steps = [calcCellDeltaList(cell, b) for cell in config]
+        config_steps: List[List[int]] = [calcCellDeltaList(cell) for cell in config]
 
-        err_sum = 0
-        errs = []
+        err_sum: float = 0
+        errs: List[float] = []
         for cell in config_steps:
-            l = []
+            l: List[float] = []
             for i in range(2**b - 1):
                 l.append((error_map[i][1] + error_map[i + 1][0]) * cell[i])
-            err_sum += sum(l)
-            errs.append(sum(l))
+            s = sum(l)
+            err_sum += s
+            errs.append(s)
 
         sums.append((stdev(errs), config, err_sum))
         # print()
@@ -111,7 +113,7 @@ def sortConfigs(b: int, c: int, error_map: dict) -> list:
     return sums
 
 
-def calcCellDelta(cell: list, bpc: int) -> int:
+def calcCellDelta(cell: List[int], bpc: int) -> int:
     """Calculates the sum of the step sizes for a cell
 
     Args:
@@ -127,27 +129,24 @@ def calcCellDelta(cell: list, bpc: int) -> int:
     )
 
 
-def calcCellDeltaList(cell: list, bpc: int) -> list:
+def calcCellDeltaList(cell: List[int]) -> List[int]:
     """Calculates the list of step sizes for a cell
 
     Args:
         cell (list): List of bits in a cell (i.e. [0, 1, 2, 3])
-        bpc (int): Bits per cell
 
     Returns:
         list: List of step sizes between levels in the cell
     """
-    out = []
-    prev_val = 0
-    for i in range(1, 2**bpc):
-        curr_val = 0
-        for idx, j in enumerate(list(bin(i)[2:].rjust(bpc, "0"))):
-            # print(idx, j)
-            curr_val += 2 ** cell[bpc - idx - 1] * int(j)
-            pass
-
-        out.append(curr_val - prev_val)
-        prev_val = curr_val
+    l = len(cell)
+    prev = 0
+    out: List[int] = []
+    for i in range(1, 2**l):
+        curr = 0
+        for idx, j in enumerate(list(bin(i)[2:].rjust(l, "0"))):
+            curr += 2 ** cell[l - idx - 1] * int(j)
+        out.append(curr - prev)
+        prev = curr
     return out
 
 
@@ -175,10 +174,8 @@ def _main():
 
     minstd = 2**num_bits
     minstdcfg = None
-    minavg = 2**num_bits
-    minavgcfg = None
 
-    perfs = []
+    perfs: List[List[Union[float, str, List[int]]]] = []
 
     print(f"Calculating step sizes...")
     for config in configs:

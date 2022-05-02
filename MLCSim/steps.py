@@ -22,12 +22,9 @@ options:
 import argparse
 import json
 
-try:
-    from .configs import sortConfigs
-    from .dist import genErrorMap
-except ImportError:
-    from configs import sortConfigs
-    from dist import genErrorMap
+
+from MLCSim.configs import sortConfigs
+from MLCSim.dist import genErrorMap
 
 
 def _main():
@@ -40,7 +37,6 @@ def _main():
     parser.add_argument(
         "-c", type=int, default=2, choices=[2, 3, 4, 5, 6, 7, 8], help="num of cells"
     )
-    parser.add_argument("-f", required=True, help="Cell configuration JSON")
     parser.add_argument("--thr", required=True, help="Threshold map JSON")
 
     args = parser.parse_args()
@@ -59,7 +55,7 @@ def _main():
         "config".ljust(len(str(sums[0][1]))), "stdev".rjust(11), "sum * err".rjust(11)
     )
     for thing in sums:
-        print(f"{thing[1]}: {thing[0]:10.5f}, {thing[2]:10.5f}")
+        print(f"{thing[1]}: {thing[0]:10.10f}, {thing[2]:10.10f}")
 
 
 if __name__ == "__main__":

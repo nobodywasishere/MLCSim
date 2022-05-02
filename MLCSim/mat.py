@@ -6,14 +6,12 @@ This module provides functions for creating and handling matrix applications.
 """
 
 import random
+from typing import List
 
-try:
-    from .MLCSim import MLCSim
-except ImportError:
-    from MLCSim import MLCSim
+from MLCSim.MLCSim import MLCSim
 
 
-def generateMatrix(b: int, c: int, arr_size: int) -> list:
+def generateMatrix(b: int, c: int, arr_size: int) -> List[List[int]]:
     """Generates a matrix of random values of a given size
 
     Args:
@@ -26,11 +24,11 @@ def generateMatrix(b: int, c: int, arr_size: int) -> list:
     """
     # generate list of random values and encode them into a matrix
     return [
-        [random.randint(0, 2 ** (b) - 1) for _ in range(c)] for j in range(arr_size)
+        [random.randint(0, 2 ** (b) - 1) for _ in range(c)] for _ in range(arr_size)
     ]
 
 
-def injectFaults(mat: list, error_map: dict, b: int) -> int:
+def injectFaults(mat: List[List[int]], error_map: List[List[float]], b: int) -> int:
     """Inject faults into an MLC matrix
 
     Args:
@@ -63,7 +61,11 @@ def injectFaults(mat: list, error_map: dict, b: int) -> int:
 
 
 def calcErrMagnitude(
-    configs: dict, in_mat: list, out_mat: list, errs: list, errs_perc: list
+    configs: List[List[List[int]]],
+    in_mat: List[List[int]],
+    out_mat: List[List[int]],
+    errs: List[List[int]],
+    errs_perc: List[List[float]],
 ):
     """Calculates the magnitude of errors difference between two matrices
 

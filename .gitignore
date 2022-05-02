@@ -1,3 +1,6 @@
 __pycache__
 site
 docs/docstrings
+build
+.mypy_cache
+*.so

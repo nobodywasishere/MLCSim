@@ -43,13 +43,14 @@ the center.
 import argparse
 from pprint import pprint
 import json
+from typing import List, Tuple
 
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
+# import numpy as np
+# import matplotlib.pyplot as plt
+# from scipy.stats import norm
 
 
-def generateThresh(b: int, e: float, dist: str) -> list:
+def generateThresh(b: int, e: float, dist: str) -> List[Tuple[float, float]]:
     """Generates a threshold map
 
     Args:
@@ -64,9 +65,9 @@ def generateThresh(b: int, e: float, dist: str) -> list:
         list: threshold map
     """
     if dist == "uniform":
-        temp = []
+        temp: List[Tuple[float, float]] = []
         for i in range(2 ** (b)):
-            temp.append((i / (2 ** (b) - 1), e))
+            temp.append((float(i) / (2 ** (b) - 1), e))
         return temp
     elif dist[:5] == "split":
         if "-" in dist:
@@ -118,24 +119,24 @@ def _main():
     else:
         pprint(thr_map)
 
-    # https://www.statology.org/plot-normal-distribution-python/
-    if args.plot:
-        fig, axs = plt.subplots(len(thr_map))
+    # # https://www.statology.org/plot-normal-distribution-python/
+    # if args.plot:
+    #     fig, axs = plt.subplots(len(thr_map))
 
-        # x-axis ranges from -5 and 5 with .001 steps
-        x = np.arange(0, 1, 0.001)
+    #     # x-axis ranges from -5 and 5 with .001 steps
+    #     x = np.arange(0, 1, 0.001)
 
-        # define multiple normal distributions
-        for b in range(2, 5):
-            axs[b - 2].title.set_text(f"σ: {thr_map[b][1][1]:0.5f}")
-            for n in thr_map[b]:
-                axs[b - 2].plot(x, norm.pdf(x, n[0], n[1]), label=f"μ: {n[0]}")
-            # axs[b-2].legend()
+    #     # define multiple normal distributions
+    #     for b in range(2, 5):
+    #         axs[b - 2].title.set_text(f"σ: {thr_map[b][1][1]:0.5f}")
+    #         for n in thr_map[b]:
+    #             axs[b - 2].plot(x, norm.pdf(x, n[0], n[1]), label=f"μ: {n[0]}")
+    #         # axs[b-2].legend()
 
-        # add legend to plot
-        # plt.legend()
-        fig.suptitle(f"{args.d} thresh dist")
-        plt.show()
+    #     # add legend to plot
+    #     # plt.legend()
+    #     fig.suptitle(f"{args.d} thresh dist")
+    #     plt.show()
 
 
 if __name__ == "__main__":

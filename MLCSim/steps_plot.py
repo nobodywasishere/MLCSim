@@ -14,18 +14,16 @@ steps sizes between each threshold level in an encoded MLC value.
 ![](../steps-uniform-3_3.png)
 """
 
-import numpy as np
+from typing import List, Union
+import numpy as np  # type: ignore
 import argparse
 import json
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # type: ignore
 
-try:
-    from .configs import calcCellDeltaList, sortConfigs
-    from .dist import genErrorMap
-except ImportError:
-    from configs import calcCellDeltaList, sortConfigs
-    from dist import genErrorMap
+
+from MLCSim.configs import calcCellDeltaList, sortConfigs
+from MLCSim.dist import genErrorMap
 
 
 def _main():
@@ -56,19 +54,18 @@ def _main():
         all_configs[:2] + [all_configs[int(len(all_configs) / 2)]] + all_configs[-2:]
     )
 
-    steps = []
-    maxval = 0
+    steps: List[List[List[List[int]]]] = []
     for config in configs:
-        config_steps = []
+        config_steps: List[List[int]] = []
         for cell in config[1]:
-            config_steps.append(calcCellDeltaList(cell, b))
-        n = (config_steps, config[1], config[0], config[2])
+            config_steps.append(calcCellDeltaList(cell))
+        n = [config_steps, config[1], config[0], config[2]]
         if n not in steps:
             steps.append(n)
 
     print(steps)
 
-    fig, axs = plt.subplots(len(steps), sharex=True)
+    _, axs = plt.subplots(len(steps), sharex=True)
     # plt.legend([f'Cell {j}' for j in reversed(range(len(steps[0])))])
     # plt.yticks(range(0, 2**(b*c), 2))
     plt.xticks(range(0, 2**b))
@@ -79,17 +76,17 @@ def _main():
 
         for j in range(len(steps[i][0])):
             x_axis = np.array([2**i for i in range(len(steps[i][0]) + 1)])
-            axs[i].plot(
+            axs[i].plot(  # type: ignore
                 [sum(steps[i][0][j][:k]) for k in range(len(steps[i][0][j]) + 1)]
             )
 
-        axs[i].title.set_text(
+        axs[i].title.set_text(  # type: ignore
             f"{steps[i][1]} encoding, {steps[i][2]:0.5f} stdev, {steps[i][3]:0.5f} sum*err"
         )
-        axs[i].set_ylim([0, 2 ** (b * c)])
-        axs[i].set_yscale("symlog", base=2)
+        axs[i].set_ylim([0, 2 ** (b * c)])  # type: ignore
+        axs[i].set_yscale("symlog", base=2)  # type: ignore
 
-    # fig.tight_layout()
+    fig.tight_layout()  # type: ignore
     plt.show()
 
 

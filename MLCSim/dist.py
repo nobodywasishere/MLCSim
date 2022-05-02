@@ -24,9 +24,10 @@ options:
 import argparse
 import json
 from pprint import pprint
+from typing import Dict, List
 
 import numpy as np
-import scipy.stats as ss
+from scipy import stats as ss  # type: ignore
 
 # https://stackoverflow.com/a/32574638/9047818
 # https://stackoverflow.com/a/13072714/9047818
@@ -49,9 +50,9 @@ def normalMidpoint(mean_a: float, mean_b: float, std_a: float, std_b: float) -> 
         - mean_b**2 / (2 * std_b**2)
         - np.log(std_b / std_a)
     )
-    roots = np.roots([a, b, c])
-    masked = np.ma.masked_outside(roots, mean_a, mean_b)
-    return masked[~masked.mask]
+    roots = np.roots([a, b, c])  # type: ignore
+    masked = np.ma.masked_outside(roots, mean_a, mean_b)  # type: ignore
+    return masked[~masked.mask]  # type: ignore
 
 
 # https://www.askpython.com/python/normal-distribution
@@ -66,11 +67,11 @@ def normalChance(mean: float, stdev: float, thr: float) -> float:
     Returns:
         float: Chance for threshold to end up above/below the given point in the distribution
     """
-    chance = ss.norm(loc=mean, scale=stdev).cdf(thr)
-    return float(chance if mean > thr else 1 - chance)
+    chance = ss.norm(loc=mean, scale=stdev).cdf(thr)  # type: ignore
+    return float(chance if mean > thr else 1 - chance)  # type: ignore
 
 
-def genErrorMap(thr_maps: dict, bpc: int) -> list:
+def genErrorMap(thr_maps: Dict[str, List[List[float]]], bpc: int) -> List[List[float]]:
     """Generate an error map from a threshold map
 
     Args:
@@ -85,7 +86,7 @@ def genErrorMap(thr_maps: dict, bpc: int) -> list:
     """
     if str(bpc) not in thr_maps.keys():
         raise ValueError(f"Threshold map does not have values for {bpc} levels")
-    thr_map = thr_maps[str(bpc)]
+    thr_map: List[List[float]] = thr_maps[str(bpc)]
     err_map = [[0.0]]
 
     for i in range(len(thr_map) - 1):

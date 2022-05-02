@@ -27,25 +27,23 @@ options:
 
 
 import random
+from typing import List
 import numpy as np
 import argparse
 import json
 import copy
-from pprint import pprint
 
-import matplotlib.pyplot as plt
-from matplotlib.ticker import PercentFormatter
+# from pprint import pprint
 
-try:
-    from .MLCSim import MLCSim
-    from .configs import sortConfigs
-    from .mat import generateMatrix, injectFaults, calcErrMagnitude
-    from .dist import genErrorMap
-except ImportError:
-    from MLCSim import MLCSim
-    from configs import sortConfigs
-    from mat import generateMatrix, injectFaults, calcErrMagnitude
-    from dist import genErrorMap
+import matplotlib.pyplot as plt  # type: ignore
+from matplotlib.ticker import PercentFormatter  # type: ignore
+
+from statistics import stdev
+
+# from MLCSim import MLCSim
+from MLCSim.configs import sortConfigs
+from MLCSim.mat import generateMatrix, injectFaults, calcErrMagnitude
+from MLCSim.dist import genErrorMap
 
 
 def _main():
@@ -98,8 +96,8 @@ def _main():
         else:
             configs = [all_configs[i][1] for i in range(len(all_configs))]
 
-    errs = [[] for i in range(len(configs))]
-    errs_perc = [[] for i in range(len(configs))]
+    errs: List[List[int]] = [[] for _ in range(len(configs))]
+    errs_perc: List[List[float]] = [[] for _ in range(len(configs))]
 
     if configs == []:
         raise ValueError("No config loaded!")
@@ -121,28 +119,40 @@ def _main():
     print(
         f"{len(configs[0])} {len(configs[0][0])}-bit cells, {args.iter_size*args.arr_size} numbers tested:"
     )
-    for i in range(len(configs)):
-        print(f"Config {i}: {configs[i]}")
+    print(
+        "| Config | Error count | Error mean | Error Stdev | Error perc |\n|-|-|-|-|-|"
+    )
+    # for i in range(len(configs)):
+    #     print(f"Config {i}: {configs[i]}")
+
+    # for i, err in enumerate(errs):
+    #     if len(err) == 0:
+    #         print(f"Config {i} did not have errors")
+    #     else:
+    #         avg_err = np.average(err)
+    #         avg_err_perc = avg_err / 2 ** (b * c) * 100
+    #         print(
+    #             f"Config {i} error count: {len(err):6d}, mean: {avg_err:8.3f}, stdev: {np.std(err):8.3f}, perc: {avg_err_perc:7.3f}%"
+    #         )
 
     for i, err in enumerate(errs):
-        if len(err) == 0:
-            print(f"Config {i} did not have errors")
-        else:
-            avg_err = np.average(err)
-            avg_err_perc = avg_err / 2 ** (b * c) * 100
-            print(
-                f"Config {i} error count: {len(err):6d}, mean: {avg_err:8.3f}, stdev: {np.std(err):8.3f}, perc: {avg_err_perc:7.3f}%"
-            )
+        avg_err = np.average(err)
+        avg_err_perc = avg_err / 2 ** (b * c) * 100
+        print(
+            f"| `{configs[i]}` | {len(err):4d} | {avg_err:6.3f} | {stdev(err):6.3f} | {avg_err_perc:7.3f}% |"
+        )
 
     if args.plot:
         plt.hist(
             errs_perc,
             bins=[x / 20 for x in range(0, 21)],
             align="mid",
-            weights=[
-                [1 / len(errs_perc[i]) for j in range(len(errs_perc[i]))]
-                for i in range(len(errs_perc))
-            ],
+            weights=np.array(
+                [
+                    [1 / len(errs_perc[i]) for _ in range(len(errs_perc[i]))]
+                    for i in range(len(errs_perc))
+                ]
+            ),
         )
         plt.title(
             f"Distribution of errors for {c} {b}-bit cells, {args.arr_size} numbers for {args.iter_size} iterations, using {args.thr}"

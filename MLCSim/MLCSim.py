@@ -23,14 +23,14 @@ options:
 ```
 """
 
-import os, sys
 import argparse
 import json
 from ast import literal_eval
+from typing import List
 
 
 class MLCSim:
-    def __init__(self, config: list):
+    def __init__(self, config: List[List[int]]):
         """init MLCSim
 
         Args:
@@ -53,7 +53,7 @@ class MLCSim:
         if val > 2**self.L - 1:
             raise ValueError(f"Value '{val}' is too large to store in {self.L} bits")
 
-    def checkCells(self, cells: list):
+    def checkCells(self, cells: List[int]):
         """Checks the value of each cell to make sure they're not too large
 
         Args:
@@ -66,7 +66,7 @@ class MLCSim:
             if i > 2**self.b - 1:
                 raise ValueError(f"Cell value '{i}' is too large")
 
-    def enc(self, val: int) -> list:
+    def enc(self, val: int) -> List[int]:
         """Encode a value to MLC cells
 
         Args:
@@ -76,7 +76,7 @@ class MLCSim:
             list: List representing the cells values
         """
         self.checkVal(val)
-        out = []
+        out: List[int] = []
         for cell in self.config:
             count = 0
             for i, bit in enumerate(cell):
@@ -84,7 +84,7 @@ class MLCSim:
             out.append(count)
         return out
 
-    def dec(self, cells: list) -> int:
+    def dec(self, cells: List[int]) -> int:
         """Decode a value to MLC cells
 
         Args:
