@@ -9,7 +9,7 @@ When called directly as main, it allows for converting a threshold map
 into an error map.
 
 ```
-$ python -m MLCSim.dist --help
+$ python -m mlcsim.dist --help
 
 usage: dist.py [-h] [-b {1,2,3,4}] -f F [-o O]
 
@@ -50,9 +50,9 @@ def normalMidpoint(mean_a: float, mean_b: float, std_a: float, std_b: float) -> 
         - mean_b**2 / (2 * std_b**2)
         - np.log(std_b / std_a)
     )
-    roots = np.roots([a, b, c])  # type: ignore
-    masked = np.ma.masked_outside(roots, mean_a, mean_b)  # type: ignore
-    return masked[~masked.mask]  # type: ignore
+    roots = np.roots([a, b, c])
+    masked = np.ma.masked_outside(roots, mean_a, mean_b)
+    return float(masked[~masked.mask][0][0])
 
 
 # https://www.askpython.com/python/normal-distribution
@@ -67,8 +67,8 @@ def normalChance(mean: float, stdev: float, thr: float) -> float:
     Returns:
         float: Chance for threshold to end up above/below the given point in the distribution
     """
-    chance = ss.norm(loc=mean, scale=stdev).cdf(thr)  # type: ignore
-    return float(chance if mean > thr else 1 - chance)  # type: ignore
+    chance = ss.norm(loc=mean, scale=stdev).cdf(thr)
+    return float(chance if mean > thr else 1 - chance)
 
 
 def genErrorMap(thr_maps: Dict[str, List[List[float]]], bpc: int) -> List[List[float]]:

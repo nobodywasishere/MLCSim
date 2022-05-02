@@ -4,3 +4,4 @@ docs/docstrings
 build
 .mypy_cache
 *.so
+docs/docs

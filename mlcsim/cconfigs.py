@@ -9,9 +9,9 @@ When called directly as main, it outputs a list of the best
 and wost configs.
 
 ```
-$ python -m MLCSim.configs --help
+$ python -m mlcsim.cconfigs --help
 
-usage: configs.py [-h] [-b {1,2,3,4}] [-c {1,2,3,4,5,6,7,8,9}] [-o O]
+usage: cconfigs.py [-h] [-b {1,2,3,4}] [-c {1,2,3,4,5,6,7,8,9}] [-o O]
 
 options:
   -h, --help            show this help message and exit

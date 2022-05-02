@@ -9,7 +9,7 @@ map based on the number of bits per cell, the std dev of each
 threshold level, and the threshold distribution.
 
 ```
-$ python -m MLCSim.thresh --help
+$ python -m mlcsim.thresh --help
 
 usage: thresh.py [-h] [-d D] [-e E] [-f F] [--plot] [--scale-e]
 

@@ -8,7 +8,10 @@ This module provides functions for creating and handling matrix applications.
 import random
 from typing import List
 
-from MLCSim.MLCSim import MLCSim
+try:
+    from MLCSim import MLCSim  # type: ignore
+except ImportError:
+    from mlcsim.MLCSim import MLCSim
 
 
 def generateMatrix(b: int, c: int, arr_size: int) -> List[List[int]]:

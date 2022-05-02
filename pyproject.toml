@@ -1,5 +1,5 @@
 [project]
-name = "MLCSim"
+name = "mlcsim"
 version = "0.2"
 description = "Tools for researching and simulating multi-level cells (MLCs)"
 authors = [

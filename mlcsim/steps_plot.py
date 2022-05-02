@@ -14,6 +14,7 @@ steps sizes between each threshold level in an encoded MLC value.
 ![](../steps-uniform-3_3.png)
 """
 
+from ast import Import
 from typing import List, Union
 import numpy as np  # type: ignore
 import argparse
@@ -22,8 +23,12 @@ import json
 import matplotlib.pyplot as plt  # type: ignore
 
 
-from MLCSim.configs import calcCellDeltaList, sortConfigs
-from MLCSim.dist import genErrorMap
+try:
+    from cconfigs import calcCellDeltaList, sortConfigs  # type: ignore
+    from dist import genErrorMap  # type: ignore
+except ImportError:
+    from mlcsim.cconfigs import calcCellDeltaList, sortConfigs
+    from mlcsim.dist import genErrorMap
 
 
 def _main():
@@ -65,9 +70,9 @@ def _main():
 
     print(steps)
 
-    _, axs = plt.subplots(len(steps), sharex=True)
-    # plt.legend([f'Cell {j}' for j in reversed(range(len(steps[0])))])
-    # plt.yticks(range(0, 2**(b*c), 2))
+    fig, axs = plt.subplots(len(steps), sharex=True)
+    plt.legend([f"Cell {j}" for j in reversed(range(len(steps[0])))])
+    plt.yticks(range(0, 2 ** (b * c), 2))
     plt.xticks(range(0, 2**b))
     plt.xlabel("Set cell level")
     plt.ylabel("Cell value")

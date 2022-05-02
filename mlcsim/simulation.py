@@ -7,7 +7,7 @@ different cell configurations chosen automatically or passed through,
 checking each of their error mean and stdev to single-level errors.
 
 ```
-$ python -m MLCSim.simulation --help
+$ python -m mlcsim.simulation --help
 
 usage: simulation.py [-h] [-b {2,3,4}] [-c {2,3,4,5,6,7,8}] [-f F] [--arr-size ARR_SIZE]
                      [--iter-size ITER_SIZE] [--thr THR] [--plot]
@@ -27,7 +27,8 @@ options:
 
 
 import random
-from typing import List
+import sys
+from typing import List, Union
 import numpy as np
 import argparse
 import json
@@ -40,13 +41,17 @@ from matplotlib.ticker import PercentFormatter  # type: ignore
 
 from statistics import stdev
 
-# from MLCSim import MLCSim
-from MLCSim.configs import sortConfigs
-from MLCSim.mat import generateMatrix, injectFaults, calcErrMagnitude
-from MLCSim.dist import genErrorMap
+try:
+    from cconfigs import sortConfigs  # type: ignore
+    from mat import generateMatrix, injectFaults, calcErrMagnitude  # type: ignore
+    from dist import genErrorMap  # type: ignore
+except ImportError:
+    from mlcsim.cconfigs import sortConfigs
+    from mlcsim.mat import generateMatrix, injectFaults, calcErrMagnitude
+    from mlcsim.dist import genErrorMap
 
 
-def _main():
+def _main(argv: List[str] = []):
 
     parser = argparse.ArgumentParser()
 
@@ -63,10 +68,10 @@ def _main():
     parser.add_argument(
         "--iter-size", type=int, default=2**8, help="number of arrays to test"
     )
-    parser.add_argument("--thr", help="Threshold map to test")
+    parser.add_argument("--thr", required=True, help="Threshold map to test")
     parser.add_argument("--plot", action="store_true", default=False)
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     b = args.b
     c = args.c
@@ -165,5 +170,5 @@ def _main():
         plt.show()
 
 
-if __name__ == "__main__":
-    _main()
+if __name__ in ("__main__", "mlcsim.simulation"):
+    _main(sys.argv[1:])

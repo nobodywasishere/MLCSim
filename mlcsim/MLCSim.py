@@ -9,7 +9,7 @@ When called directly as main, it allows for encoding and decoding a value
 using a cell configuration json.
 
 ```
-$ python -m MLCSim.MLCSim --help
+$ python -m mlcsim.MLCSim --help
 
 usage: MLCSim.py [-h] -f F {enc,dec} val
 
