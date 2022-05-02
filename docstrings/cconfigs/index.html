@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Margret Riegert" /><link rel="canonical" href="https://blog.eowyn.net/MLCSim/docstrings/cconfigs/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Cconfigs - MLCSim</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Cconfigs";
+        var mkdocs_page_input_path = "docstrings/cconfigs.md";
+        var mkdocs_page_url = "/MLCSim/docstrings/cconfigs/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> MLCSim
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">MLCSim</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../REAMDE/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../MLCSim/">MLCSim</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Cconfigs</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#function-findallconfigs">function findAllConfigs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#function-sortconfigs">function sortConfigs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#function-calccelldelta">function calcCellDelta</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#function-calccelldeltalist">function calcCellDeltaList</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../dist/">Dist</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mat/">Mat</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../simulation/">Simulation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../steps/">Steps</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../steps_plot/">Steps plot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../thresh/">Thresh</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">MLCSim</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>API Reference &raquo;</li><li>Cconfigs</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/nobodywasishere/MLCSim/edit/master/docs/docstrings/cconfigs.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!-- markdownlint-disable -->
+
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/cconfigs.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h1 id="module-cconfigs"><kbd>module</kbd> <code>cconfigs</code></h1>
+<p>Cell configuration functions </p>
+<p>This module provides functions for finding/handling cell configurations. </p>
+<p>When called directly as main, it outputs a list of the best and wost configs. </p>
+<pre><code>$ python -m mlcsim.cconfigs --help
+
+usage: cconfigs.py [-h] [-b {1,2,3,4}] [-c {1,2,3,4,5,6,7,8,9}] [-o O]
+
+options:
+
+    -h, --help            show this help message and exit
+
+    -b {1,2,3,4}          bits per cell
+
+    -c {1,2,3,4,5,6,7,8,9}
+                         num of cells
+
+    -o O                  output to file
+</code></pre>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/cconfigs.py#L52"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h2 id="function-findallconfigs"><kbd>function</kbd> <code>findAllConfigs</code></h2>
+<pre><code class="language-python">findAllConfigs(bits_per_cell: int, num_cells: int) → List[List[List[int]]]
+</code></pre>
+<p>Calculates all possible cell configurations </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>bits_per_cell</code></b> (int):  Bits per cell </li>
+<li><b><code>num_cells</code></b> (int):  Number of cells </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  List of all possible cell configurations </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/cconfigs.py#L81"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h2 id="function-sortconfigs"><kbd>function</kbd> <code>sortConfigs</code></h2>
+<pre><code class="language-python">sortConfigs(
+    b: int,
+    c: int,
+    error_map: List[List[float]]
+) → List[Tuple[float, List[List[int]], float]]
+</code></pre>
+<p>Generates all cell configs and sorts them by their delta and error sum </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>b</code></b> (int):  Bits per cell </li>
+<li><b><code>c</code></b> (int):  Number of cells </li>
+<li><b><code>error_map</code></b> (dict):  Error map dictionary </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  All configs sorted by delta and error sum </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/cconfigs.py#L116"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h2 id="function-calccelldelta"><kbd>function</kbd> <code>calcCellDelta</code></h2>
+<pre><code class="language-python">calcCellDelta(cell: List[int], bpc: int) → int
+</code></pre>
+<p>Calculates the sum of the step sizes for a cell </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>cell</code></b> (list):  List of bits in a cell (i.e. [0, 1, 2, 3]) </li>
+<li><b><code>bpc</code></b> (int):  Bits per cell </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>int</code></b>:  Sum of the step sizes between levels in the cell </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/cconfigs.py#L132"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h2 id="function-calccelldeltalist"><kbd>function</kbd> <code>calcCellDeltaList</code></h2>
+<pre><code class="language-python">calcCellDeltaList(cell: List[int]) → List[int]
+</code></pre>
+<p>Calculates the list of step sizes for a cell </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>cell</code></b> (list):  List of bits in a cell (i.e. [0, 1, 2, 3]) </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  List of step sizes between levels in the cell </li>
+</ul>
+<hr />
+<p><em>This file was automatically generated via <a href="https://github.com/ml-tooling/lazydocs">lazydocs</a>.</em></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../MLCSim/" class="btn btn-neutral float-left" title="MLCSim"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../dist/" class="btn btn-neutral float-right" title="Dist">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/nobodywasishere/MLCSim" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../MLCSim/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../dist/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

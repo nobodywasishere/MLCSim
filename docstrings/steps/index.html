@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Margret Riegert" /><link rel="canonical" href="https://blog.eowyn.net/MLCSim/docstrings/steps/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Steps - MLCSim</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Steps";
+        var mkdocs_page_input_path = "docstrings/steps.md";
+        var mkdocs_page_url = "/MLCSim/docstrings/steps/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> MLCSim
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">MLCSim</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../REAMDE/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../MLCSim/">MLCSim</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cconfigs/">Cconfigs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../dist/">Dist</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mat/">Mat</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../simulation/">Simulation</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Steps</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../steps_plot/">Steps plot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../thresh/">Thresh</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">MLCSim</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>API Reference &raquo;</li><li>Steps</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/nobodywasishere/MLCSim/edit/master/docs/docstrings/steps.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!-- markdownlint-disable -->
+
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/steps.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h1 id="module-steps"><kbd>module</kbd> <code>steps</code></h1>
+<p>Script for finding configurations </p>
+<p>When called directly as main, it will provide the 'scores' of all the possible configurations. </p>
+<pre><code>$ python -m mlcsim.steps --help
+
+usage: steps.py [-h] [-b {2,3,4}] [-c {2,3,4,5,6,7,8}] --thr THR
+
+options:
+
+    -h, --help          show this help message and exit
+
+    -b {2,3,4}          bits per cell
+
+    -c {2,3,4,5,6,7,8}  num of cells  --thr THR           Threshold map JSO
+</code></pre>
+<p>Prints out a pretty markdown table </p>
+<pre><code class="language-sh">$ ./mlcsim/steps.py --thr config/thr-split-1.json -b 2 -c 3
+
+Calculating 15.0 permutations...
+| config                     |        stdev |    sum * err |
+|----------------------------|--------------|--------------|
+| `[[2, 3], [1, 4], [0, 5]]` | 0.0010835747 | 0.0049746942 |
+| `[[2, 3], [1, 5], [0, 4]]` | 0.0010840178 | 0.0049746942 |
+| `[[2, 4], [1, 3], [0, 5]]` | 0.0010840178 | 0.0049746942 |
+| `[[2, 4], [1, 5], [0, 3]]` | 0.0010846822 | 0.0049746942 |
+| `[[2, 5], [1, 3], [0, 4]]` | 0.0010853461 | 0.0049746942 |
+| `[[2, 5], [1, 4], [0, 3]]` | 0.0010855673 | 0.0049746942 |
+| `[[3, 4], [2, 5], [0, 1]]` | 0.0024939156 | 0.0092341522 |
+| `[[3, 5], [2, 4], [0, 1]]` | 0.0024946857 | 0.0092341522 |
+| `[[3, 4], [1, 2], [0, 5]]` | 0.0026877419 | 0.0078143329 |
+| `[[3, 4], [1, 5], [0, 2]]` | 0.0026880545 | 0.0078143329 |
+| `[[3, 5], [1, 2], [0, 4]]` | 0.0026889923 | 0.0078143329 |
+| `[[3, 5], [1, 4], [0, 2]]` | 0.0026891262 | 0.0078143329 |
+| `[[4, 5], [2, 3], [0, 1]]` | 0.0056367465 | 0.0149134295 |
+| `[[4, 5], [1, 2], [0, 3]]` | 0.0059556212 | 0.0134936102 |
+| `[[4, 5], [1, 3], [0, 2]]` | 0.0059556414 | 0.0134936102 |
+
+$ ./mlcsim/steps.py --thr config/thr-uniform.json -b 2 -c 3
+
+Calculating 15.0 permutations...
+| config                     |        stdev |    sum * err |
+|----------------------------|--------------|--------------|
+| `[[2, 3], [1, 4], [0, 5]]` | 0.0003343276 | 0.0019472414 |
+| `[[2, 3], [1, 5], [0, 4]]` | 0.0003564553 | 0.0019472414 |
+| `[[2, 4], [1, 3], [0, 5]]` | 0.0003564553 | 0.0019472414 |
+| `[[2, 4], [1, 5], [0, 3]]` | 0.0003872836 | 0.0019472414 |
+| `[[2, 5], [1, 3], [0, 4]]` | 0.0004158326 | 0.0019472414 |
+| `[[2, 5], [1, 4], [0, 3]]` | 0.0004249229 | 0.0019472414 |
+| `[[3, 4], [1, 2], [0, 5]]` | 0.0004249229 | 0.0019472414 |
+| `[[3, 4], [1, 5], [0, 2]]` | 0.0004553120 | 0.0019472414 |
+| `[[3, 4], [2, 5], [0, 1]]` | 0.0005162753 | 0.0019472414 |
+| `[[3, 5], [1, 2], [0, 4]]` | 0.0005362441 | 0.0019472414 |
+| `[[3, 5], [1, 4], [0, 2]]` | 0.0005468288 | 0.0019472414 |
+| `[[3, 5], [2, 4], [0, 1]]` | 0.0005724352 | 0.0019472414 |
+| `[[4, 5], [1, 2], [0, 3]]` | 0.0007242115 | 0.0019472414 |
+| `[[4, 5], [1, 3], [0, 2]]` | 0.0007268450 | 0.0019472414 |
+| `[[4, 5], [2, 3], [0, 1]]` | 0.0007359881 | 0.0019472414 |
+</code></pre>
+<hr />
+<p><em>This file was automatically generated via <a href="https://github.com/ml-tooling/lazydocs">lazydocs</a>.</em></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../simulation/" class="btn btn-neutral float-left" title="Simulation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../steps_plot/" class="btn btn-neutral float-right" title="Steps plot">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/nobodywasishere/MLCSim" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../simulation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../steps_plot/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

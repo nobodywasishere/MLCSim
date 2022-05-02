@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Margret Riegert" /><link rel="canonical" href="https://blog.eowyn.net/MLCSim/docstrings/MLCSim/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>MLCSim - MLCSim</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "MLCSim";
+        var mkdocs_page_input_path = "docstrings/MLCSim.md";
+        var mkdocs_page_url = "/MLCSim/docstrings/MLCSim/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> MLCSim
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">MLCSim</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../REAMDE/">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">MLCSim</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#class-mlcsim">class MLCSim</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#method-__init__">method __init__</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#method-checkcells">method checkCells</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#method-checkval">method checkVal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#method-dec">method dec</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#method-enc">method enc</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cconfigs/">Cconfigs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../dist/">Dist</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../mat/">Mat</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../simulation/">Simulation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../steps/">Steps</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../steps_plot/">Steps plot</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../thresh/">Thresh</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">MLCSim</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>API Reference &raquo;</li><li>MLCSim</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/nobodywasishere/MLCSim/edit/master/docs/docstrings/MLCSim.md"
+          class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!-- markdownlint-disable -->
+
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L0"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h1 id="module-mlcsim"><kbd>module</kbd> <code>MLCSim</code></h1>
+<p>MLCSim class </p>
+<p>This module provides the <code>MLCSim</code> class, which is used for encoding and decoding values to and from its MLC configuration. </p>
+<p>When called directly as main, it allows for encoding and decoding a value using a cell configuration json. </p>
+<pre><code>$ python -m mlcsim.MLCSim --help
+
+usage: MLCSim.py [-h] -f F {enc,dec} val
+
+positional arguments:
+   {enc,dec}   action to take on value
+   val         val to {en,de}code
+
+options:
+
+    -h, --help  show this help message and exit
+
+    -f F        cell config json
+</code></pre>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L32"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h2 id="class-mlcsim"><kbd>class</kbd> <code>MLCSim</code></h2>
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L33"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-__init__"><kbd>method</kbd> <code>__init__</code></h3>
+<pre><code class="language-python">__init__(config: List[List[int]])
+</code></pre>
+<p>init MLCSim </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>config</code></b> (list):  Cell configuration </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L56"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-checkcells"><kbd>method</kbd> <code>checkCells</code></h3>
+<pre><code class="language-python">checkCells(cells: List[int])
+</code></pre>
+<p>Checks the value of each cell to make sure they're not too large </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>cells</code></b> (list):  Cells to be checked </li>
+</ul>
+<p><strong>Raises:</strong></p>
+<ul>
+<li><b><code>ValueError</code></b>:  If cell value is too large </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L44"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-checkval"><kbd>method</kbd> <code>checkVal</code></h3>
+<pre><code class="language-python">checkVal(val: int)
+</code></pre>
+<p>Check if value can be stored in the MLC </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>val</code></b> (int):  Value to be checked </li>
+</ul>
+<p><strong>Raises:</strong></p>
+<ul>
+<li><b><code>ValueError</code></b>:  If value is too large </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L87"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-dec"><kbd>method</kbd> <code>dec</code></h3>
+<pre><code class="language-python">dec(cells: List[int]) → int
+</code></pre>
+<p>Decode a value to MLC cells </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>cells</code></b> (list):  List representing the cells values </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>int</code></b>:  Encoded value </li>
+</ul>
+<hr />
+<p><a href="https://github.com/nobodywasishere/MLCSim/blob/master/mlcsim/MLCSim.py#L69"><img align="right" style="float:right;" src="https://img.shields.io/badge/-source-cccccc?style=flat-square"></a></p>
+<h3 id="method-enc"><kbd>method</kbd> <code>enc</code></h3>
+<pre><code class="language-python">enc(val: int) → List[int]
+</code></pre>
+<p>Encode a value to MLC cells </p>
+<p><strong>Args:</strong></p>
+<ul>
+<li><b><code>val</code></b> (int):  Value to be encoded </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><b><code>list</code></b>:  List representing the cells values </li>
+</ul>
+<hr />
+<p><em>This file was automatically generated via <a href="https://github.com/ml-tooling/lazydocs">lazydocs</a>.</em></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../REAMDE/" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../cconfigs/" class="btn btn-neutral float-right" title="Cconfigs">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/nobodywasishere/MLCSim" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../REAMDE/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../cconfigs/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
